@@ -36,4 +36,16 @@ jobs:
         run: |
           newman run "./postman/collection.postman_collection.json" \
           -e "./postman/environnement.postman_environment.json" \
-          --iteration-data "./postman/iteration.json"
+           --iteration-data "./postman/iteration.json" \
+           -r htmlextra \
+           --reporter-htmlextra-export "./postman/rapportNewman.html"
+      - name: upload HTML test report as artifact 
+        uses: actions/upload-artifact@v4
+        with: 
+          name: newman-test-report
+          path: reports/rapportNewman.html
+      - name: Add HTML report link
+        run: |
+          echo "### Rapport newman généré" >> $GITHUB_STEP_SUMMARY
+          echo "Télécharger le rapport depuis la section artifact **Artifact ->newman-test-report**" >> $GITHUB_STEP_SUMMARY        
+
