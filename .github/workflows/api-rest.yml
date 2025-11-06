@@ -15,3 +15,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Installation des librairies
+        run: npm install
+
+      - name: Lancement du serveur
+        run: |
+          nohup node server.js > server.log 2>&1 &
+          sleep 5
