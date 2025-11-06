@@ -28,3 +28,12 @@ jobs:
         run: |
           nohup node server.js > server.log 2>&1 &
           sleep 5
+
+      - name: Installation de newman + HTML extra reporter
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Lancement de newman
+        run: |
+          newman run "./postman/collection.postman_collection.json" \
+          -e "./postman/environnement.postman_environment.json" \
+          --iteration-data "./postman/iteration.json"
